@@ -10,11 +10,26 @@ class OpenWeatherMapController {
     
     weak var delegate: OpenWeatherMapDelegate?
     
-    func fetchData() {
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&\(API.key)&q=Kiev&units=metric")
+    func createURLWithCity(city: String) {
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&\(API.key)&q=\(city)&units=metric") else {
+            print("Couldn't create URL")
+            return
+        }
+        fetchData(url: url)
+    }
+    
+    func createURLWithLocation(longitude: Double, latitude: Double) {
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&\(API.key)&lon=\(longitude)&lat=\(latitude)&units=metric") else {
+            print("Couldn't create URL")
+            return
+        }
+        fetchData(url: url)
+    }
+    
+    func fetchData(url: URL) {
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
-        let task = session.dataTask(with: url!) { (data, response, error) in
+        let task = session.dataTask(with: url) { (data, response, error) in
             guard error == nil else {
                 print(error!)
                 return
