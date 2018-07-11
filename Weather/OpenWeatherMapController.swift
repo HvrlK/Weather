@@ -1,41 +1,43 @@
 import Foundation
 
+//MARK: - Protocols
+
 protocol OpenWeatherMapDelegate: class {
     func fetched(_ controller: OpenWeatherMapController)
 }
 
+//MARK: - Classes
+
 class OpenWeatherMapController {
+    
+    //MARK: - Properties
     
     var weather: [Weather]?
     var currentTask: URLSessionTask?
     weak var delegate: OpenWeatherMapDelegate?
     
-    func searchByCity(city: String) {
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&APPID=\(API.key)&q=\(city)&units=metric") else {
-            print("Couldn't create URL")
-            return
-        }
+    //MARK: - Methods
+    
+    func search(city: String) {
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&APPID=\(API.key)&q=\(city)&units=metric")
         fetchData(url: url)
     }
     
-    func searchByLocation(longitude: Double, latitude: Double) {
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&APPID=\(API.key)&lon=\(longitude)&lat=\(latitude)&units=metric") else {
-            print("Couldn't create URL")
-            return
-        }
+    func search(longitude: Double, latitude: Double) {
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&APPID=\(API.key)&lon=\(longitude)&lat=\(latitude)&units=metric")
         fetchData(url: url)
     }
     
-    func searchBySeveralCities(cityIds: String) {
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/group?&id=\(cityIds)&APPID=\(API.key)&units=metric") else {
-            print("Couldn't create URL")
-            return
-        }
+    func search(cityIds: String) {
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/group?&id=\(cityIds)&APPID=\(API.key)&units=metric")
         fetchData(url: url)
     }
     
-    func fetchData(url: URL) {
-        currentTask?.cancel()
+    func fetchData(url: URL?) {
+        guard let url = url else {
+            print("Couldn't create URL")
+            return
+        }
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         currentTask = session.dataTask(with: url) { (data, response, error) in
@@ -47,9 +49,6 @@ class OpenWeatherMapController {
                 print("Error: did not receive data")
                 return
             }
-//            print(responseData)
-//            guard let json = try? JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any] else {return}
-//            print(json)
             if let weather = try? JSONDecoder().decode(List.self, from: responseData) {
                 self.weather = weather.list
             } else {
@@ -66,6 +65,8 @@ class OpenWeatherMapController {
     }
 
 }
+
+//MARK: - Enums
 
 private enum API {
     static let key = "9b082b6bbd7a77d48d3c8092ae107cd8"
