@@ -1,5 +1,7 @@
 import Foundation
 
+//MARK: - Structures
+
 struct List: Codable {
     let list: [Weather]
 }
@@ -9,6 +11,8 @@ struct Weather: Codable {
     let main: MainInfo
     let coord: Coordinate
     let wind: Wind
+    let id: Int
+    let sys: System
 }
 
 struct MainInfo: Codable {
@@ -27,4 +31,7 @@ struct Wind: Codable {
     let deg: Double
 }
 
+struct System: Codable {
+    let country: String
+}
 
