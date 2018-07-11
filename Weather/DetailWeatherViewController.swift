@@ -27,11 +27,6 @@ class DetailWeatherViewController: UIViewController {
     @IBOutlet weak var windLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var weatherImageView: UIImageView!
-//
-    @IBAction func startButtonTapped() {
-        weatherController.search(city: "Rivne")
-    }
-//
     
     //MARK: - Methods
 
@@ -71,8 +66,7 @@ class DetailWeatherViewController: UIViewController {
             locationManager.startUpdatingLocation()
         }
     }
-
-
+    
 }
 
 //MARK: - Extensions
@@ -80,11 +74,10 @@ class DetailWeatherViewController: UIViewController {
 extension DetailWeatherViewController: OpenWeatherMapDelegate {
     
     func fetched(_ controller: OpenWeatherMapController) {
-        if let weather = controller.weather {
-            self.weather = weather[0]
-            DispatchQueue.main.async {
-                self.updateUI()
-            }
+        guard let weather = controller.weather else { return }
+        self.weather = weather
+        DispatchQueue.main.async {
+            self.updateUI()
         }
     }
     
