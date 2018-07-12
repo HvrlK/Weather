@@ -13,6 +13,7 @@ struct Weather: Codable {
     let wind: Wind
     let id: Int
     let sys: System
+    let weather: [WeatherDescription]
 }
 
 struct MainInfo: Codable {
@@ -29,6 +30,11 @@ struct Coordinate: Codable {
 struct Wind: Codable {
     let speed: Double
     let deg: Double
+}
+
+struct WeatherDescription: Codable {
+    let description: String
+    let icon: String
 }
 
 struct System: Codable {

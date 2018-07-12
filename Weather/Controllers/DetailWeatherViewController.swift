@@ -47,13 +47,30 @@ class DetailWeatherViewController: UIViewController {
             humidityLabel.text = weather.main.humidity.description + "%"
             temperatureLabel.text = Int(weather.main.temp).description + "°C"
             pressureLabel.text = weather.main.pressure.description + "hPa"
-            windLabel.text = weather.wind.speed.description + "m/sec" 
+            windLabel.text = weather.wind.speed.description + "m/sec"
+            guard let url = URL(string: "https://openweathermap.org/img/w/\(weather.weather[0].icon).png") else { return }
+            downloadImage(url: url)
         } else {
             cityLabel.text = "--"
             humidityLabel.text = "--"
             temperatureLabel.text = "--"
             pressureLabel.text = "--"
             windLabel.text = "--"
+        }
+    }
+    
+    func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            completion(data, response, error)
+            }.resume()
+    }
+    
+    func downloadImage(url: URL) {
+        getDataFromUrl(url: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async() {
+                self.weatherImageView.image = UIImage(data: data)
+            }
         }
     }
     
