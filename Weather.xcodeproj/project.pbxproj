@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD1B364D20F6906200B82049 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DD1B364B20F6906200B82049 /* DataModel.xcdatamodeld */; };
+		DD1B365720F697B700B82049 /* Cities+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B365520F697B700B82049 /* Cities+CoreDataClass.swift */; };
+		DD1B365820F697B700B82049 /* Cities+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B365620F697B700B82049 /* Cities+CoreDataProperties.swift */; };
 		DD8DAE6320EF5741002A0C4B /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DAE6220EF5741002A0C4B /* WeatherModel.swift */; };
 		DD8DAE6520EFD1E3002A0C4B /* CityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DAE6420EFD1E3002A0C4B /* CityTableViewController.swift */; };
 		DDF393AA20EE838C00C311AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF393A920EE838C00C311AE /* AppDelegate.swift */; };
@@ -18,6 +21,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD1B364C20F6906200B82049 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		DD1B365520F697B700B82049 /* Cities+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cities+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DD1B365620F697B700B82049 /* Cities+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cities+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DD8DAE6220EF5741002A0C4B /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		DD8DAE6420EFD1E3002A0C4B /* CityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityTableViewController.swift; sourceTree = "<group>"; };
 		DDF393A620EE838C00C311AE /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,6 +47,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DD1B364E20F6906E00B82049 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				DDF393BD20EE91CB00C311AE /* OpenWeatherMapController.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		DD1B364F20F6908A00B82049 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				DD1B365520F697B700B82049 /* Cities+CoreDataClass.swift */,
+				DD1B365620F697B700B82049 /* Cities+CoreDataProperties.swift */,
+				DD1B364B20F6906200B82049 /* DataModel.xcdatamodeld */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
+		DD1B365020F6909F00B82049 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DDF393AB20EE838C00C311AE /* DetailWeatherViewController.swift */,
+				DD8DAE6420EFD1E3002A0C4B /* CityTableViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		DDF3939D20EE838C00C311AE = {
 			isa = PBXGroup;
 			children = (
@@ -60,12 +93,12 @@
 		DDF393A820EE838C00C311AE /* Weather */ = {
 			isa = PBXGroup;
 			children = (
-				DDF393BD20EE91CB00C311AE /* OpenWeatherMapController.swift */,
+				DD1B364E20F6906E00B82049 /* Networking */,
+				DD1B365020F6909F00B82049 /* Controllers */,
 				DDF393A920EE838C00C311AE /* AppDelegate.swift */,
-				DDF393AB20EE838C00C311AE /* DetailWeatherViewController.swift */,
-				DD8DAE6420EFD1E3002A0C4B /* CityTableViewController.swift */,
 				DD8DAE6220EF5741002A0C4B /* WeatherModel.swift */,
 				DDF393AD20EE838C00C311AE /* Main.storyboard */,
+				DD1B364F20F6908A00B82049 /* DataModel */,
 				DDF393B020EE838E00C311AE /* Assets.xcassets */,
 				DDF393B220EE838E00C311AE /* LaunchScreen.storyboard */,
 				DDF393B520EE838E00C311AE /* Info.plist */,
@@ -144,10 +177,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD1B365720F697B700B82049 /* Cities+CoreDataClass.swift in Sources */,
 				DDF393BE20EE91CB00C311AE /* OpenWeatherMapController.swift in Sources */,
 				DDF393AC20EE838C00C311AE /* DetailWeatherViewController.swift in Sources */,
 				DD8DAE6520EFD1E3002A0C4B /* CityTableViewController.swift in Sources */,
+				DD1B364D20F6906200B82049 /* DataModel.xcdatamodeld in Sources */,
 				DD8DAE6320EF5741002A0C4B /* WeatherModel.swift in Sources */,
+				DD1B365820F697B700B82049 /* Cities+CoreDataProperties.swift in Sources */,
 				DDF393AA20EE838C00C311AE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,6 +382,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DD1B364B20F6906200B82049 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DD1B364C20F6906200B82049 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = DD1B364C20F6906200B82049 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DDF3939E20EE838C00C311AE /* Project object */;
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import CoreData
 
 class CityTableViewController: UITableViewController {
     
@@ -17,15 +18,39 @@ class CityTableViewController: UITableViewController {
     var weatherInCurrentLocation: Weather?
     let weatherController = OpenWeatherMapController()
     var weatherList: [Weather]?
+    var appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     //MARK: - Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherController.search(cityIds: "524901,703448,2172797")
         weatherController.delegate = self
+        createStringWithId()
     }
-
+    
+    func createStringWithId() {
+        let cities = fetchSavedCity()
+        print(cities.count.description)
+        guard !cities.isEmpty else { return }
+        var idString = cities[0].id
+        if cities.count > 1 {
+            for cityIndex in 1..<cities.count {
+                idString += ",\(cities[cityIndex].id)"
+            }
+        }
+        weatherController.search(cityIds: idString)
+    }
+    
+    func fetchSavedCity() -> [Cities] {
+        let fetchRequest = NSFetchRequest<Cities>(entityName: "Cities")
+        fetchRequest.returnsObjectsAsFaults = false
+        do {
+            return try appDelegate.managedObjectContext.fetch(fetchRequest)
+        } catch {
+            fatalError("Fetch data error: \(error)")
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
