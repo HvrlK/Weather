@@ -93,7 +93,25 @@ class CityTableViewController: UITableViewController {
             }
         }
     }
-
+    
+    //MARK: - Actions
+    
+    @IBAction func addCityButtonTapped(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Please, enter country and zip codes", message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            //TODO: add logic
+            guard let textFields = alert.textFields, let text = textFields[0].text else { return }
+            print(text)
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        alert.addTextField { (textField) in
+            textField.placeholder = "Example: us 94040"
+        }
+        present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 //MARK: - Extensions

@@ -54,6 +54,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Cities" id="efo-qh-epA">
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="wOc-NS-BRX">
+                            <connections>
+                                <action selector="addCityButtonTapped:" destination="hNY-Yn-z0w" id="zvE-to-k9K"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Location" id="NeF-Oz-DjK">
                             <connections>
                                 <action selector="showWeatherInCurrentLocation:" destination="hNY-Yn-z0w" id="005-no-13a"/>
