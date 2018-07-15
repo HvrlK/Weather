@@ -55,18 +55,17 @@ class OpenWeatherMapController {
                 return
             }
             switch self.searchType {
-            case .coordinate:
+            case .coordinate, .zip:
                 guard let weather = try? JSONDecoder().decode(Weather.self, from: responseData) else {
                     print("Couldn't decode data into Weather")
                     return
                 }
-                self.weather = weather
-            case .zip:
-                guard let weather = try? JSONDecoder().decode(Weather.self, from: responseData) else {
-                    print("Couldn't decode data into Weather")
-                    return
+                if self.searchType == .coordinate {
+                    self.weather = weather
+                } else {
+                    self.newCityId = weather.id.description
+
                 }
-                self.newCityId = weather.id.description
             case .ids:
                 guard let weather = try? JSONDecoder().decode(List.self, from: responseData) else {
                     print("Couldn't decode data into List of Weather")
