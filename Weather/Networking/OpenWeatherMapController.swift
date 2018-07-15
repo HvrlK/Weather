@@ -16,6 +16,7 @@ class OpenWeatherMapController {
     var weatherList: [Weather]?
     var currentTask: URLSessionTask?
     weak var delegate: OpenWeatherMapDelegate?
+    var newCityId: String?
     var searchType: SearchType = .none
     
     //MARK: - Methods
@@ -29,6 +30,12 @@ class OpenWeatherMapController {
     func search(cityIds: String) {
         let url = URL(string: "https://api.openweathermap.org/data/2.5/group?&id=\(cityIds)&APPID=\(API.key)&units=metric")
         searchType = .ids
+        fetchData(url: url)
+    }
+    
+    func search(zip: String) {
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&APPID=\(API.key)&zip=\(zip)&units=metric")
+        searchType = .zip
         fetchData(url: url)
     }
     
@@ -48,12 +55,18 @@ class OpenWeatherMapController {
                 return
             }
             switch self.searchType {
-            case .coordinate, .zip:
+            case .coordinate:
                 guard let weather = try? JSONDecoder().decode(Weather.self, from: responseData) else {
                     print("Couldn't decode data into Weather")
                     return
                 }
                 self.weather = weather
+            case .zip:
+                guard let weather = try? JSONDecoder().decode(Weather.self, from: responseData) else {
+                    print("Couldn't decode data into Weather")
+                    return
+                }
+                self.newCityId = weather.id.description
             case .ids:
                 guard let weather = try? JSONDecoder().decode(List.self, from: responseData) else {
                     print("Couldn't decode data into List of Weather")

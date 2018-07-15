@@ -64,11 +64,6 @@ class CityTableViewController: UITableViewController {
         return 0
     }
 
-    @IBAction func showWeatherInCurrentLocation(_ sender: UIBarButtonItem) {
-        locationManager.startUpdatingLocation()
-    }
-    
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
         if let weatherList = weatherList {
@@ -96,20 +91,23 @@ class CityTableViewController: UITableViewController {
     
     //MARK: - Actions
     
+    @IBAction func showWeatherInCurrentLocation(_ sender: UIBarButtonItem) {
+        locationManager.startUpdatingLocation()
+    }
+    
     @IBAction func addCityButtonTapped(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "Please, enter country and zip codes", message: nil, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            //TODO: add logic
             guard let textFields = alert.textFields, let text = textFields[0].text else { return }
-            print(text)
+            self.weatherController.search(zip: text)
         }
         alert.addAction(cancelAction)
         alert.addAction(okAction)
         alert.addTextField { (textField) in
             textField.placeholder = "Example: us 94040"
         }
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
     
 }
@@ -119,13 +117,29 @@ class CityTableViewController: UITableViewController {
 extension CityTableViewController: OpenWeatherMapDelegate {
     
     func fetched(_ controller: OpenWeatherMapController) {
-        guard let weatherList = controller.weatherList else { return }
-        self.weatherList = weatherList
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        switch controller.searchType {
+        case .zip:
+            guard let newCityId = controller.newCityId else { return }
+            let newCity = Cities(context: appDelegate.managedObjectContext)
+            newCity.id = newCityId
+            do {
+                try appDelegate.managedObjectContext.save()
+            } catch {
+                fatalError("Can't save new city")
+            }
+            DispatchQueue.main.async {
+                self.createStringWithId()
+            }
+        case .ids:
+            guard let weatherList = controller.weatherList else { return }
+            self.weatherList = weatherList
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        default:
+            return
         }
     }
-    
     
 }
 
