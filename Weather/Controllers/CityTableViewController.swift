@@ -73,6 +73,21 @@ class CityTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            appDelegate.managedObjectContext.delete(fetchSavedCity()[indexPath.row])
+            do {
+                try appDelegate.managedObjectContext.save()
+            } catch {
+                fatalError("Can't save data")
+            }
+            weatherList?.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+        }
+    }
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
