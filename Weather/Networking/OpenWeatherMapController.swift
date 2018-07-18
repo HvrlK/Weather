@@ -3,7 +3,19 @@ import Foundation
 //MARK: - Protocols
 
 protocol OpenWeatherMapDelegate: class {
-    func fetched(_ controller: OpenWeatherMapController)
+    func fetchedWeather(_ controller: OpenWeatherMapController)
+    func fetchedCities(_ controller: OpenWeatherMapController)
+    func fetchedNewCity(_ controller: OpenWeatherMapController)
+    func fetchedForecast(_ controller: OpenWeatherMapController)
+}
+
+//MARK: - Extensions
+
+extension OpenWeatherMapDelegate {
+    func fetchedWeather(_ controller: OpenWeatherMapController) {}
+    func fetchedCities(_ controller: OpenWeatherMapController) {}
+    func fetchedNewCity(_ controller: OpenWeatherMapController) {}
+    func fetchedForecast(_ controller: OpenWeatherMapController) {}
 }
 
 //MARK: - Classes
@@ -12,12 +24,12 @@ class OpenWeatherMapController {
     
     //MARK: - Properties
     
+    weak var delegate: OpenWeatherMapDelegate?
     var weather: Weather?
     var weatherList: [Weather]?
     var currentTask: URLSessionTask?
-    weak var delegate: OpenWeatherMapDelegate?
     var newCityId: String?
-    var searchType: SearchType = .none
+    private var searchType: SearchType = .none
     
     //MARK: - Methods
     
@@ -62,9 +74,10 @@ class OpenWeatherMapController {
                 }
                 if self.searchType == .coordinate {
                     self.weather = weather
+                    self.delegate?.fetchedWeather(self)
                 } else {
                     self.newCityId = weather.id.description
-
+                    self.delegate?.fetchedNewCity(self)
                 }
             case .ids:
                 guard let weather = try? JSONDecoder().decode(List.self, from: responseData) else {
@@ -72,10 +85,11 @@ class OpenWeatherMapController {
                     return
                 }
                 self.weatherList = weather.list
+                self.delegate?.fetchedCities(self)
             case .none:
                 return
             }
-            self.delegate?.fetched(self)
+//            self.delegate?.fetched(self)
             self.searchType = .none
         }
         currentTask?.resume()
@@ -89,7 +103,7 @@ private enum API {
     static let key = "9b082b6bbd7a77d48d3c8092ae107cd8"
 }
 
-enum SearchType {
+private enum SearchType {
     case none
     case coordinate
     case ids

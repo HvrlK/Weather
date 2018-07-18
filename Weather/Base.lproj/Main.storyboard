@@ -79,21 +79,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yhs-Kc-8d8">
-                                <rect key="frame" x="161" y="94" width="52" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qTe-Sb-Vif">
-                                <rect key="frame" x="127.5" y="138" width="120" height="120"/>
+                                <rect key="frame" x="127.5" y="148.5" width="120" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="J8j-FE-AKW"/>
                                     <constraint firstAttribute="height" constant="120" id="gsk-yj-pXy"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2zh-nu-qC6">
-                                <rect key="frame" x="30" y="283" width="315" height="140"/>
+                                <rect key="frame" x="30" y="293.5" width="315" height="140"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5Ts-Dw-FH3">
                                         <rect key="frame" x="0.0" y="0.0" width="258.5" height="140"/>
@@ -155,21 +149,46 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="HUb-U2-V4q">
+                                <rect key="frame" x="143" y="74" width="88" height="64.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yhs-Kc-8d8">
+                                        <rect key="frame" x="18" y="0.0" width="52" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Km-my-Enb">
+                                        <rect key="frame" x="0.0" y="44" width="88" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SZz-60-wHu">
+                                <rect key="frame" x="136.5" y="602" width="101" height="45"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <state key="normal" title="Forecast"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="2zh-nu-qC6" firstAttribute="top" secondItem="qTe-Sb-Vif" secondAttribute="bottom" constant="25" id="4e8-Z9-W7H"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2zh-nu-qC6" secondAttribute="trailing" constant="30" id="5T6-hi-QAV"/>
-                            <constraint firstItem="Yhs-Kc-8d8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="Eqq-0s-c12"/>
-                            <constraint firstItem="Yhs-Kc-8d8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GK0-My-JF2"/>
-                            <constraint firstItem="qTe-Sb-Vif" firstAttribute="top" secondItem="Yhs-Kc-8d8" secondAttribute="bottom" constant="8" id="aIf-Sz-pFC"/>
+                            <constraint firstItem="qTe-Sb-Vif" firstAttribute="top" secondItem="HUb-U2-V4q" secondAttribute="bottom" constant="10" id="A78-XG-Fld"/>
+                            <constraint firstItem="HUb-U2-V4q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UqV-kq-KDT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="SZz-60-wHu" secondAttribute="bottom" constant="20" id="c7m-eo-YfI"/>
                             <constraint firstItem="qTe-Sb-Vif" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cy3-2Y-MJG"/>
                             <constraint firstItem="2zh-nu-qC6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="e2y-wa-Hvr"/>
+                            <constraint firstItem="SZz-60-wHu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hDv-cG-geo"/>
+                            <constraint firstItem="HUb-U2-V4q" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="kCv-dV-FKb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="cityLabel" destination="Yhs-Kc-8d8" id="AA2-nA-qgi"/>
+                        <outlet property="descriptionLable" destination="7Km-my-Enb" id="C45-dy-wQ1"/>
                         <outlet property="humidityLabel" destination="vpr-4h-2QU" id="e8J-fe-JCW"/>
                         <outlet property="pressureLabel" destination="35X-lt-Q1O" id="g4t-Jr-Oke"/>
                         <outlet property="temperatureLabel" destination="lxb-fW-pFW" id="GXy-C7-QG6"/>
@@ -179,7 +198,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="700" y="60"/>
+            <point key="canvasLocation" x="700" y="59.820089955022496"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZTw-0n-wgJ">

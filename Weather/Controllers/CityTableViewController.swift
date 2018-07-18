@@ -30,7 +30,6 @@ class CityTableViewController: UITableViewController {
     
     func createStringWithId() {
         let cities = fetchSavedCity()
-        print(cities.count.description)
         guard !cities.isEmpty else { return }
         var idString = cities[0].id
         if cities.count > 1 {
@@ -49,6 +48,10 @@ class CityTableViewController: UITableViewController {
         } catch {
             fatalError("Fetch data error: \(error)")
         }
+    }
+    
+    func createZip(text: String) -> String {
+        return text.split(separator: " ").joined(separator: ",")
     }
     
     // MARK: - Table view data source
@@ -111,16 +114,16 @@ class CityTableViewController: UITableViewController {
     }
     
     @IBAction func addCityButtonTapped(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Please, enter country and zip codes", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Please, enter zip and country codes", message: nil, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             guard let textFields = alert.textFields, let text = textFields[0].text else { return }
-            self.weatherController.search(zip: text)
+            self.weatherController.search(zip: self.createZip(text: text))
         }
         alert.addAction(cancelAction)
         alert.addAction(okAction)
         alert.addTextField { (textField) in
-            textField.placeholder = "Example: us 94040"
+            textField.placeholder = "Example: 94040 us"
         }
         present(alert, animated: true)
     }
@@ -131,28 +134,25 @@ class CityTableViewController: UITableViewController {
 
 extension CityTableViewController: OpenWeatherMapDelegate {
     
-    func fetched(_ controller: OpenWeatherMapController) {
-        switch controller.searchType {
-        case .zip:
-            guard let newCityId = controller.newCityId else { return }
-            let newCity = Cities(context: appDelegate.managedObjectContext)
-            newCity.id = newCityId
-            do {
-                try appDelegate.managedObjectContext.save()
-            } catch {
-                fatalError("Can't save new city")
-            }
-            DispatchQueue.main.async {
-                self.createStringWithId()
-            }
-        case .ids:
-            guard let weatherList = controller.weatherList else { return }
-            self.weatherList = weatherList
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        default:
-            return
+    func fetchedNewCity(_ controller: OpenWeatherMapController) {
+        guard let newCityId = controller.newCityId else { return }
+        let newCity = Cities(context: appDelegate.managedObjectContext)
+        newCity.id = newCityId
+        do {
+            try appDelegate.managedObjectContext.save()
+        } catch {
+            fatalError("Can't save new city")
+        }
+        DispatchQueue.main.async {
+            self.createStringWithId()
+        }
+    }
+    
+    func fetchedCities(_ controller: OpenWeatherMapController) {
+        guard let weatherList = controller.weatherList else { return }
+        self.weatherList = weatherList
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
     

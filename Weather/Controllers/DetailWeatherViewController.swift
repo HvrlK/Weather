@@ -27,6 +27,7 @@ class DetailWeatherViewController: UIViewController {
     @IBOutlet weak var windLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var weatherImageView: UIImageView!
+    @IBOutlet weak var descriptionLable: UILabel!
     
     //MARK: - Methods
 
@@ -48,6 +49,7 @@ class DetailWeatherViewController: UIViewController {
             temperatureLabel.text = Int(weather.main.temp).description + "°C"
             pressureLabel.text = weather.main.pressure.description + "hPa"
             windLabel.text = weather.wind.speed.description + "m/sec"
+            descriptionLable.text = weather.weather[0].description
             guard let url = URL(string: "https://openweathermap.org/img/w/\(weather.weather[0].icon).png") else { return }
             downloadImage(url: url)
         } else {
@@ -56,6 +58,7 @@ class DetailWeatherViewController: UIViewController {
             temperatureLabel.text = "--"
             pressureLabel.text = "--"
             windLabel.text = "--"
+            descriptionLable.text = "--"
         }
     }
     
@@ -90,7 +93,7 @@ class DetailWeatherViewController: UIViewController {
 
 extension DetailWeatherViewController: OpenWeatherMapDelegate {
     
-    func fetched(_ controller: OpenWeatherMapController) {
+    func fetchedWeather(_ controller: OpenWeatherMapController) {
         guard let weather = controller.weather else { return }
         self.weather = weather
         DispatchQueue.main.async {
