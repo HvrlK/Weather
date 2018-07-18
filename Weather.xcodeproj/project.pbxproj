@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD0E116320FF80EF004F578E /* CityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0E116220FF80EF004F578E /* CityCell.swift */; };
 		DD1B364D20F6906200B82049 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DD1B364B20F6906200B82049 /* DataModel.xcdatamodeld */; };
 		DD1B365720F697B700B82049 /* Cities+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B365520F697B700B82049 /* Cities+CoreDataClass.swift */; };
 		DD1B365820F697B700B82049 /* Cities+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B365620F697B700B82049 /* Cities+CoreDataProperties.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD0E116220FF80EF004F578E /* CityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCell.swift; sourceTree = "<group>"; };
 		DD1B364C20F6906200B82049 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		DD1B365520F697B700B82049 /* Cities+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cities+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DD1B365620F697B700B82049 /* Cities+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cities+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				DD1B365020F6909F00B82049 /* Controllers */,
 				DDF393A920EE838C00C311AE /* AppDelegate.swift */,
 				DD8DAE6220EF5741002A0C4B /* WeatherModel.swift */,
+				DD0E116220FF80EF004F578E /* CityCell.swift */,
 				DDF393AD20EE838C00C311AE /* Main.storyboard */,
 				DD1B364F20F6908A00B82049 /* DataModel */,
 				DDF393B020EE838E00C311AE /* Assets.xcassets */,
@@ -182,6 +185,7 @@
 				DDF393AC20EE838C00C311AE /* DetailWeatherViewController.swift in Sources */,
 				DD8DAE6520EFD1E3002A0C4B /* CityTableViewController.swift in Sources */,
 				DD1B364D20F6906200B82049 /* DataModel.xcdatamodeld in Sources */,
+				DD0E116320FF80EF004F578E /* CityCell.swift in Sources */,
 				DD8DAE6320EF5741002A0C4B /* WeatherModel.swift in Sources */,
 				DD1B365820F697B700B82049 /* Cities+CoreDataProperties.swift in Sources */,
 				DDF393AA20EE838C00C311AE /* AppDelegate.swift in Sources */,

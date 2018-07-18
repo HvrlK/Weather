@@ -54,6 +54,21 @@ class CityTableViewController: UITableViewController {
         return text.split(separator: " ").joined(separator: ",")
     }
     
+    func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            completion(data, response, error)
+            }.resume()
+    }
+    
+    func downloadImage(url: URL, imageView: UIImageView) {
+        getDataFromUrl(url: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async() {
+                imageView.image = UIImage(data: data)
+            }
+        }
+    }
+
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -68,10 +83,13 @@ class CityTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
-        if let weatherList = weatherList {
-            cell.textLabel?.text = weatherList[indexPath.row].name + ", " + weatherList[indexPath.row].sys.country
-            cell.detailTextLabel?.text = Int(weatherList[indexPath.row].main.temp).description + "°C"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CityCell", for: indexPath)
+        if let cityCell = cell as? CityCell, let weatherList = weatherList {
+            cityCell.cityLabel.text = weatherList[indexPath.row].name + ", " + weatherList[indexPath.row].sys.country
+            cityCell.temperatureLabel.text = Int(weatherList[indexPath.row].main.temp).description + "°C"
+            if let url = URL(string: "https://openweathermap.org/img/w/\(weatherList[indexPath.row].weather[0].icon).png") {
+                downloadImage(url: url, imageView: cityCell.weatherImageView)
+            }
         }
         return cell
     }

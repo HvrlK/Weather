@@ -26,7 +26,6 @@ class DetailWeatherViewController: UIViewController {
     @IBOutlet weak var pressureLabel: UILabel!
     @IBOutlet weak var windLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
-    @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var descriptionLable: UILabel!
     
     //MARK: - Methods
@@ -50,8 +49,6 @@ class DetailWeatherViewController: UIViewController {
             pressureLabel.text = weather.main.pressure.description + "hPa"
             windLabel.text = weather.wind.speed.description + "m/sec"
             descriptionLable.text = weather.weather[0].description
-            guard let url = URL(string: "https://openweathermap.org/img/w/\(weather.weather[0].icon).png") else { return }
-            downloadImage(url: url)
         } else {
             cityLabel.text = "--"
             humidityLabel.text = "--"
@@ -61,22 +58,7 @@ class DetailWeatherViewController: UIViewController {
             descriptionLable.text = "--"
         }
     }
-    
-    func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            completion(data, response, error)
-            }.resume()
-    }
-    
-    func downloadImage(url: URL) {
-        getDataFromUrl(url: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async() {
-                self.weatherImageView.image = UIImage(data: data)
-            }
-        }
-    }
-    
+        
     func weatherForCurrentLocation() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
