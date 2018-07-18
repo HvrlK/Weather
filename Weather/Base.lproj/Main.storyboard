@@ -168,6 +168,9 @@
                                 <rect key="frame" x="136.5" y="602" width="101" height="45"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Forecast"/>
+                                <connections>
+                                    <action selector="f" destination="BYZ-38-t0r" eventType="touchUpInside" id="hLE-3o-70y"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="temp" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lxb-fW-pFW">
                                 <rect key="frame" x="152" y="168.5" width="70.5" height="38.5"/>

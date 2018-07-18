@@ -37,7 +37,7 @@ class CityTableViewController: UITableViewController {
                 idString += ",\(cities[cityIndex].id)"
             }
         }
-        weatherController.search(cityIds: idString)
+        weatherController.getWeather(forSavedCitiesWithIds: idString)
     }
     
     func fetchSavedCity() -> [Cities] {
@@ -115,7 +115,7 @@ class CityTableViewController: UITableViewController {
         if segue.identifier == "ShowDetail" {
             if let detailWeather = segue.destination as? DetailWeatherViewController, let indexPath = tableView.indexPathForSelectedRow, let weatherList = weatherList {
                 let weather = weatherList[indexPath.row]
-                detailWeather.weatherController.search(longitude: weather.coord.lon, latitude: weather.coord.lat)
+                detailWeather.weatherController.getWeatherByCoordinates(longitude: weather.coord.lon, latitude: weather.coord.lat)
             }
         }
         if segue.identifier == "CurrentWeather" {
@@ -136,7 +136,7 @@ class CityTableViewController: UITableViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             guard let textFields = alert.textFields, let text = textFields[0].text else { return }
-            self.weatherController.search(zip: self.createZip(text: text))
+            self.weatherController.getWeather(forCityWithZipCode: self.createZip(text: text))
         }
         alert.addAction(cancelAction)
         alert.addAction(okAction)

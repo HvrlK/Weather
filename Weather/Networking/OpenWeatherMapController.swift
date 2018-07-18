@@ -29,25 +29,32 @@ class OpenWeatherMapController {
     var weatherList: [Weather]?
     var currentTask: URLSessionTask?
     var newCityId: String?
+    var forecastList: ForecastList?
     private var searchType: SearchType = .none
     
     //MARK: - Methods
     
-    func search(longitude: Double, latitude: Double) {
+    func getWeatherByCoordinates(longitude: Double, latitude: Double) {
         let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&APPID=\(API.key)&lon=\(longitude)&lat=\(latitude)&units=metric")
         searchType = .coordinate
         fetchData(url: url)
     }
     
-    func search(cityIds: String) {
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/group?&id=\(cityIds)&APPID=\(API.key)&units=metric")
+    func getWeather(forSavedCitiesWithIds ids: String) {
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/group?&id=\(ids)&APPID=\(API.key)&units=metric")
         searchType = .ids
         fetchData(url: url)
     }
     
-    func search(zip: String) {
+    func getWeather(forCityWithZipCode zip: String) {
         let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?&APPID=\(API.key)&zip=\(zip)&units=metric")
         searchType = .zip
+        fetchData(url: url)
+    }
+    
+    func getForecast(forCityWithId id: String) {
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?APPID=\(API.key)&id=\(id)&cnt=10&units=metric")
+        searchType = .forecast
         fetchData(url: url)
     }
     
@@ -86,10 +93,16 @@ class OpenWeatherMapController {
                 }
                 self.weatherList = weather.list
                 self.delegate?.fetchedCities(self)
+            case .forecast:
+                guard let forecastList = try? JSONDecoder().decode(ForecastList.self, from: responseData) else {
+                    print("Couldn't decode data into ForecastList")
+                    return
+                }
+                self.forecastList = forecastList
+                self.delegate?.fetchedForecast(self)
             case .none:
                 return
             }
-//            self.delegate?.fetched(self)
             self.searchType = .none
         }
         currentTask?.resume()
@@ -108,4 +121,5 @@ private enum SearchType {
     case coordinate
     case ids
     case zip
+    case forecast
 }

@@ -46,9 +46,9 @@ class DetailWeatherViewController: UIViewController {
             cityLabel.text = weather.name
             humidityLabel.text = weather.main.humidity.description + "%"
             temperatureLabel.text = Int(weather.main.temp).description + "°C"
-            pressureLabel.text = weather.main.pressure.description + "hPa"
+            pressureLabel.text = Int(weather.main.pressure).description + "hPa"
             windLabel.text = weather.wind.speed.description + "m/sec"
-            descriptionLable.text = weather.weather[0].description
+            descriptionLable.text = weather.weather[0].main
         } else {
             cityLabel.text = "--"
             humidityLabel.text = "--"
@@ -57,6 +57,10 @@ class DetailWeatherViewController: UIViewController {
             windLabel.text = "--"
             descriptionLable.text = "--"
         }
+    }
+    
+    @IBAction func f() {
+        weatherController.getForecast(forCityWithId: (weather?.id.description)!)
     }
         
     func weatherForCurrentLocation() {
@@ -88,7 +92,7 @@ extension DetailWeatherViewController: OpenWeatherMapDelegate {
 extension DetailWeatherViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locationValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        weatherController.search(longitude: locationValue.longitude, latitude: locationValue.latitude)
+        weatherController.getWeatherByCoordinates(longitude: locationValue.longitude, latitude: locationValue.latitude)
         manager.stopUpdatingLocation()
     }
     
